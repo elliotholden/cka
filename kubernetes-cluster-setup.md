@@ -31,6 +31,7 @@ Ubuntu 22.04 or higher</br>
         > sudo sysctl -p /etc/sysctl.d/99-kubernetes-cri.conf
 
     - Check to make sure the settings have been saved:
+
         >sudo sysctl -a | grep -E 'net.ipv4.ip_forward | net.ipv6.conf.all.forwarding'
 
 ## Install containerd and kube tools (kubeadm, kubectl, kubelet)
