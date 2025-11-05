@@ -86,6 +86,6 @@ Ubuntu 22.04 or higher</br>
 
         kubectl get nodes -o wide
 
-4. If you need to generate tokens for the joinging worker nodes run the following:
+4. If you need to regenerate tokens for the joining worker nodes run the following:
 
         kubeadm token create --print-join-command
