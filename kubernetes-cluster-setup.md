@@ -64,6 +64,7 @@ Ubuntu 22.04 or higher</br>
 
 
    __Note:__ *make sure the version of all tools are the same.*
+
     > kubectl version
 
     > kubeadm version
