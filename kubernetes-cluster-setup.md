@@ -25,7 +25,6 @@ Ubuntu 22.04 or higher</br>
     - Create a file name __99-kubernetes-cri.conf__ inside the /etc/sysctl.d directory.
         
         > sudo vi /etc/sysctl.d/__99-kubernetes-cri.conf__ 
-        > sudo vi /etc/sysctl.d/__99-kubernetes-cri.conf__ 
 
     - Add the following to the file you just created:
 
@@ -38,7 +37,7 @@ Ubuntu 22.04 or higher</br>
 
     - Check to make sure the settings have been saved:
 
-        >sudo sysctl -a | grep -E 'net.ipv4.ip_forward | net.ipv6.conf.all.forwarding'
+        >sudo sysctl -a | grep -wE 'net.ipv4.ip_forward|net.ipv6.conf.all.forwarding'
 
 ## Install containerd and kube tools (kubeadm, kubectl, kubelet)
 4. Create the directory __~/repos__ and cd into it. Clone the Sander van Vugt CKA repo:
