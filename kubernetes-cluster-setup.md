@@ -1,7 +1,7 @@
 # Kubernetes Cluster Setup
 
 ## Provision Nodes
-To get a good working cluster setup for practicing, testing, or studying for an exam (CKA, CKAD, CKS etc.) would will need to provision 3 nodes that all exsist on the same physical network. The examples below were done using Google Cloud. To get started you need to create a NEW Google Cloud account. As of November 2025 Google is offering $300 worth of compute credit for FREE for 3 months.
+To get a good working cluster setup for practicing, testing, or studying for an exam (CKA, CKAD, CKS etc.) you will need to provision 3 nodes that all exsist on the same physical network. The examples below were done using Google Cloud. To get started you need to create a NEW Google Cloud account. As of November 2025 Google is offering $300 worth of compute credit for FREE for 3 months.
 
 #### Node Requirments:
 2 CPU</br>
