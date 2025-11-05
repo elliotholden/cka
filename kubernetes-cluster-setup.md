@@ -54,11 +54,12 @@ Ubuntu 22.04 or higher</br>
 
 6. Install the kube tools (kubeadm, kubectl, kubelet) by running the __setup-kubetools.sh__ script.
 
-    > ~/.repos/cka/setup-kubetools.sh
+    > ~/repos/cka/setup-kubetools.sh
 
     Verify __kubeadm__, __kubectl__, and __kubelet__ are installed:
-     >which kubeadm kubectl kubelet
 
-   *The kubelet may not actually be running until the a cluster has been initialized on the Control Node (or for the Worker Nodes, if they've actually joing a cluster)*
+    > which kubeadm kubectl kubelet
+
+*The kubelet may not actually be running until the a cluster has been initialized on the Control Node (or in the case of the worker nodes, if they've actually joined a cluster)*
 
     > systemctl status kubelet
