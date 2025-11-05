@@ -24,7 +24,7 @@ Ubuntu 22.04 or higher</br>
 4. Enable IP forwarding from within the OS as well by doing the following from the command line:
     - Create a file name __99-kubernetes-cri.conf__ inside the /etc/sysctl.d directory.
         
-        > sudo vi /etc/sysctl.d/__99-kubernetes-cri.conf__ 
+            sudo vi /etc/sysctl.d/__99-kubernetes-cri.conf__ 
 
     - Add the following to the file you just created:
 
@@ -33,46 +33,60 @@ Ubuntu 22.04 or higher</br>
 
     - Activate the newly created systctl configuration
 
-        > sudo sysctl -p /etc/sysctl.d/99-kubernetes-cri.conf
+            sudo sysctl -p /etc/sysctl.d/99-kubernetes-cri.conf
 
     - Check to make sure the settings have been saved:
 
-        >sudo sysctl -a | grep -wE 'net.ipv4.ip_forward|net.ipv6.conf.all.forwarding'
+            sudo sysctl -a | grep -wE 'net.ipv4.ip_forward|net.ipv6.conf.all.forwarding'
 
 ## Install containerd and kube tools (kubeadm, kubectl, kubelet)
 4. Create the directory __~/repos__ and cd into it. Clone the Sander van Vugt CKA repo:
 
-    > git clone git@github.com:sandervanvugt/cka
+        git clone git@github.com:sandervanvugt/cka
 
 5. Install __containerd__ by running the ./setup-container.sh script.
 
-    > ~/repos/cka/setup-container.sh
+        ~/repos/cka/setup-container.sh
 
     Verfiy __containerd__ is running:
 
-    >systemctl status containerd
+        systemctl status containerd
 
 6. Install the kube tools (kubeadm, kubectl, kubelet) by running the __setup-kubetools.sh__ script.
 
-    > ~/repos/cka/setup-kubetools.sh
+        ~/repos/cka/setup-kubetools.sh
 
     Verify __kubeadm__, __kubectl__, and __kubelet__ are installed and that the kubelet service is running:
 
-    > which kubeadm kubectl kubelet
+        which kubeadm kubectl kubelet
 
-    > systemctl status kubelet
+        systemctl status kubelet
 
 
    __Note:__ *make sure the version of all tools are the same.*
 
-    > kubectl version
-
-    > kubeadm version
-
-    > kubelet --version
+        kubectl version
+        kubeadm version
+        kubelet --version
 
 *The kubelet may not actually be running until the a cluster has been initialized on the Control Node (or in the case of the worker nodes, if they've actually joined a cluster)*
 
 ## Initialize Cluster
 
 1. Run __kubeadm init__
+
+2. To start using your cluster, you need to run the following as a regular user:
+
+        mkdir -p $HOME/.kube
+
+        sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    
+        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+3. Test access to your cluster:
+
+        kubectl get nodes -o wide
+
+4. If you need to generate tokens for the joinging worker nodes run the following:
+
+        kubeadm token create --print-join-command
