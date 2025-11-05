@@ -40,11 +40,11 @@ Ubuntu 22.04 or higher</br>
             sudo sysctl -a | grep -wE 'net.ipv4.ip_forward|net.ipv6.conf.all.forwarding'
 
 ## Install containerd and kube tools (kubeadm, kubectl, kubelet)
-4. Create the directory __~/repos__ and cd into it. Clone the Sander van Vugt CKA repo:
+1. Create the directory __~/repos__ and cd into it. Clone the Sander van Vugt CKA repo:
 
         git clone git@github.com:sandervanvugt/cka
 
-5. Install __containerd__ by running the ./setup-container.sh script.
+2. Install __containerd__ by running the ./setup-container.sh script.
 
         ~/repos/cka/setup-container.sh
 
@@ -52,17 +52,17 @@ Ubuntu 22.04 or higher</br>
 
         systemctl status containerd
 
-6. Install the kube tools (kubeadm, kubectl, kubelet) by running the __setup-kubetools.sh__ script.
+3. Install the kube tools (kubeadm, kubectl, kubelet) by running the __setup-kubetools.sh__ script.
 
         ~/repos/cka/setup-kubetools.sh
 
-7. Verify __kubeadm__, __kubectl__, and __kubelet__ are installed and that the kubelet service is running:
+4. Verify __kubeadm__, __kubectl__, and __kubelet__ are installed and that the kubelet service is running:
 
         which kubeadm kubectl kubelet
 
         systemctl status kubelet
 
-8. __Note:__ *make sure the version of all tools are the same.*
+5. __Note:__ *make sure the version of all tools are the same.*
 
         kubectl version
         kubeadm version
