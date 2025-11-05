@@ -1,14 +1,16 @@
 # Kubernetes Cluster Setup
 
 ## Provision Nodes
-To get a good working cluster setup for practicing, testing, or studying for the CKA exam you will need to provision 3 nodes that all exsist on the same physical network. The examples below were done using Google Cloud. To get started you need to create a NEW Google Cloud account. As of November 2025 Google is offering $300 worth of compute credit for FREE for 3 months. You can use an existing Google account if you have "Never" activated Google's "Cloud" servervice on that Google account before. Instructions for determining whether you have every activated the Google "Cloud" service on your existing Google account can be found __<here\>__.
+To get a good working cluster setup for practicing, testing, or studying for the CKA exam you will need to provision **3 nodes** that all exsist on the same physical network. The examples below were done using Google Cloud. To get started you need to create a NEW Google Cloud account. As of November 2025 Google is offering $300 worth of compute credit for FREE for 3 months. You can use an existing Google account if you have "Never" activated Google's "Cloud" servervice on that Google account before. Instructions for determining whether you have every activated the Google "Cloud" service on your existing Google account can be found __<here\>__.
 
 #### Node Requirments:
 2 CPU</br>
 2 GiB Memory</br>
 Ubuntu 22.04 or higher</br>
 
-1. From the Google Cloud Web Console provision 1 control node and 2 worker nodes with the following specs: **2 CPU / 2 GiB memory / Ubuntu 22.04 or higher**
+
+1. Create a Project called __CKA Lab__ ([Instructions Here](https://cloud.google.com/distributed-cloud/sandbox/latest/create-project?_gl=1*jyiq3z*_up*MQ..&gclid=Cj0KCQiAiKzIBhCOARIsAKpKLAP8Km_yi7WhS-AcbVFpX32gpJ4Y72krgd_Yu7q4fSnYktEFQiTRSHoaAqzhEALw_wcB&gclsrc=aw.ds))
+1. Provision 1 control node and 2 worker nodes with the following specs: **2 CPU / 2 GiB memory / Ubuntu 22.04 or higher**
 2. Enable IP Forwarding when initially provisioning the node in the Google Cloud web console.
 3. Enable IP forwarding from within the OS as well by doing the following:
     - Create a file name __99-kubernetes-cri.conf__ inside the /etc/sysctl.d directory.
