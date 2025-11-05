@@ -20,13 +20,11 @@ Ubuntu 22.04 or higher</br>
         
         > sudo vi /etc/sysctl.d/__99-kubernetes-cri.conf__ 
         > sudo vi /etc/sysctl.d/__99-kubernetes-cri.conf__ 
+
     - Add the following to the file you just created:
 
-           net.ipv4.ip_forward = 1
-           net.ipv4.ip_forward = 1
-
-           net.ipv6.conf.all.forwarding = 1
-           net.ipv6.conf.all.forwarding = 1
+            net.ipv4.ip_forward = 1
+            net.ipv6.conf.all.forwarding = 1
 
     - Activate the newly created systctl configuration
 
