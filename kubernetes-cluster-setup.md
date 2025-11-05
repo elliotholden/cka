@@ -46,7 +46,7 @@ Ubuntu 22.04 or higher</br>
 
 5. Install __containerd__ by running the ./setup-container.sh script.
 
-    > ~/repos/cka/set-container.sh
+    > ~/repos/cka/setup-container.sh
 
     Verfiy __containerd__ is running:
 
@@ -54,7 +54,7 @@ Ubuntu 22.04 or higher</br>
 
 6. Install the kube tools (kubeadm, kubectl, kubelet) by running the __setup-kubetools.sh__ script.
 
-    > ~/.repos/cka/set-kubetools.sh
+    > ~/.repos/cka/setup-kubetools.sh
 
     Verify __kubeadm__, __kubectl__, and __kubelet__ are installed:
      >which kubeadm kubectl kubelet
