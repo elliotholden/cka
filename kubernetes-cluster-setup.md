@@ -56,10 +56,10 @@ Ubuntu 22.04 or higher</br>
 
     > ~/repos/cka/setup-kubetools.sh
 
-    Verify __kubeadm__, __kubectl__, and __kubelet__ are installed:
+    Verify __kubeadm__, __kubectl__, and __kubelet__ are installed and that the kubelet service is running:
 
     > which kubeadm kubectl kubelet
 
-*The kubelet may not actually be running until the a cluster has been initialized on the Control Node (or in the case of the worker nodes, if they've actually joined a cluster)*
-
     > systemctl status kubelet
+
+*The kubelet may not actually be running until the a cluster has been initialized on the Control Node (or in the case of the worker nodes, if they've actually joined a cluster)*
