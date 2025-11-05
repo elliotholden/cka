@@ -72,3 +72,7 @@ Ubuntu 22.04 or higher</br>
     > kubelet --version
 
 *The kubelet may not actually be running until the a cluster has been initialized on the Control Node (or in the case of the worker nodes, if they've actually joined a cluster)*
+
+## Initialize Cluster
+
+1. Run __kubeadm init__
