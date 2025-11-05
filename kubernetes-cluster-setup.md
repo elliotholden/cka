@@ -42,11 +42,11 @@ Ubuntu 22.04 or higher</br>
 ## Install containerd and kube tools (kubeadm, kubectl, kubelet)
 4. Create the directory __~/repos__ and cd into it. Clone the Sander van Vugt CKA repo:
 
-    >git clone git@github.com:sandervanvugt/cka
+    > git clone git@github.com:sandervanvugt/cka
 
 5. Install __containerd__ by running the ./setup-container.sh script.
 
-    >~/repos/cka/set-container.sh
+    > ~/repos/cka/set-container.sh
 
     Verfiy __containerd__ is running:
 
@@ -54,11 +54,11 @@ Ubuntu 22.04 or higher</br>
 
 6. Install the kube tools (kubeadm, kubectl, kubelet) by running the __setup-kubetools.sh__ script.
 
-    >~/.repos/cka/set-kubetools.sh
+    > ~/.repos/cka/set-kubetools.sh
 
     Verify __kubeadm__, __kubectl__, and __kubelet__ are installed:
      >which kubeadm kubectl kubelet
 
    *The kubelet may not actually be running until the a cluster has been initialized on the Control Node (or for the Worker Nodes, if they've actually joing a cluster)*
 
-    >systemctl status kubelet
+    > systemctl status kubelet
