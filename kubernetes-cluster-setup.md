@@ -11,8 +11,14 @@ Ubuntu 22.04 or higher</br>
 
 1. Create a Project named __CKA Lab__ ([Instructions Here](https://cloud.google.com/distributed-cloud/sandbox/latest/create-project?_gl=1*jyiq3z*_up*MQ..&gclid=Cj0KCQiAiKzIBhCOARIsAKpKLAP8Km_yi7WhS-AcbVFpX32gpJ4Y72krgd_Yu7q4fSnYktEFQiTRSHoaAqzhEALw_wcB&gclsrc=aw.ds))
 2. From the web console, provision 1 control node and 2 worker nodes with the following specs:<br />
-    - **Instance type:** E2-Small
-    - **OS:** Ubuntu 22.04 or higher
+    - **Instance names:** control-1 / worker-1 / worker-2
+    - **Region:** us-east1 (South Carolina)
+    - **Zone:** Any
+    - **Instance type:** e2-small
+    - **OS:** Ubuntu 24.04 LTS *(use the same OS version for all nodes)*
+    - **Disk:** SSD persistent disk / 20GB
+    - **Data protection:** No backups
+    - **Hostnames:** control1.cka, worker1.cka, worker2.cka
     - **IP Forwarding:** Enabled
 3. Make sure IP Forwarding was __enabled__ when initially provisioning the node in the Google Cloud web console.
 4. Enable IP forwarding from within the OS as well by doing the following from the command line:
