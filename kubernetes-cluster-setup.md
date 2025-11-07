@@ -25,7 +25,7 @@ Ubuntu 22.04 or higher</br>
 4. Repeat steps 1 - 3 for the remaining nodes (worker-1, worker-2)
 
 ## Enable IP Forwarding (from within the OS)
-1. Enable IP forwarding from within the OS as well by doing the following from the command line:
+1. Enable IP forwarding on *each* __node__ from within the OS by doing the following from the command line:
     - Create a file name __99-kubernetes-cri.conf__ inside the /etc/sysctl.d directory.
         
             sudo vi /etc/sysctl.d/__99-kubernetes-cri.conf__ 
