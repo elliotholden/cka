@@ -78,7 +78,8 @@ Ubuntu 22.04 or higher</br>
 
 ## Initialize Cluster
 
-1. Run __kubeadm init__
+1. Run __kubeadm init__ ONLY On the __control__ node<br/>
+   >If you run __kubeadm init__ on any other nodes then you will end up with *multiple* clusters instead of just *one*.
 
 2. To start using your cluster, you need to run the following as a regular user:
 
