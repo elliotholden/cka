@@ -9,7 +9,8 @@ To get a good working cluster setup for practicing, testing, or studying for the
 2 GiB Memory</br>
 Ubuntu 22.04 or higher</br>
 
-1. Create a Project named __CKA Lab__ ([Instructions Here](https://cloud.google.com/distributed-cloud/sandbox/latest/create-project?_gl=1*jyiq3z*_up*MQ..&gclid=Cj0KCQiAiKzIBhCOARIsAKpKLAP8Km_yi7WhS-AcbVFpX32gpJ4Y72krgd_Yu7q4fSnYktEFQiTRSHoaAqzhEALw_wcB&gclsrc=aw.ds))
+1. Create a Project named __CKA Lab__ ([Instructions Here](https://cloud.google.com/distributed-cloud/sandbox/latest/create-project?_gl=1*jyiq3z*_up*MQ..&gclid=Cj0KCQiAiKzIBhCOARIsAKpKLAP8Km_yi7WhS-AcbVFpX32gpJ4Y72krgd_Yu7q4fSnYktEFQiTRSHoaAqzhEALw_wcB&gclsrc=aw.ds))<br />
+        a. If prompted Enable the Compute API
 2. From the web console, provision 1 control node and 2 worker nodes with the following specs:<br />
     - **Instance names:** control-1 / worker-1 / worker-2
     - **Region:** us-east1 (South Carolina)
