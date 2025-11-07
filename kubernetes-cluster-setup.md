@@ -43,6 +43,8 @@ Ubuntu 22.04 or higher</br>
 
             sudo sysctl -a | grep -wE 'net.ipv4.ip_forward|net.ipv6.conf.all.forwarding'
 
+**NOTE:** *Make sure to repeat the IP forwarding steps on the __worker-1__ and __worker-2__ nodes.*
+
 ## Install containerd and kube tools (kubeadm, kubectl, kubelet)
 1. Create the directory __~/repos__ and cd into it. Clone the Sander van Vugt CKA repo:
 
