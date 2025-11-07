@@ -28,7 +28,7 @@ Ubuntu 22.04 or higher</br>
 1. Enable IP forwarding on *each* __node__ from within the OS by doing the following from the command line:
     - Create a file name __99-kubernetes-cri.conf__ inside the /etc/sysctl.d directory.
         
-            sudo vi /etc/sysctl.d/__99-kubernetes-cri.conf__ 
+            sudo vi /etc/sysctl.d/99-kubernetes-cri.conf 
 
     - Add the following to the file you just created:
 
