@@ -46,6 +46,7 @@ Ubuntu 22.04 or higher</br>
 **NOTE:** *Make sure to repeat the IP forwarding steps on the __worker-1__ and __worker-2__ nodes.*
 
 ## Install containerd and kube tools (kubeadm, kubectl, kubelet)
+__NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (control and workers).
 1. Create the directory __~/repos__ and cd into it. Clone the Sander van Vugt CKA repo:
 
         git clone git@github.com:sandervanvugt/cka
@@ -78,8 +79,10 @@ Ubuntu 22.04 or higher</br>
 
 ## Initialize Cluster
 
-1. Run __kubeadm init__ ONLY On the __control__ node<br/>
+1. Run __kubeadm init__ ONLY on the __control__ node<br/>
    >If you run __kubeadm init__ on any other nodes then you will end up with *multiple* clusters instead of just *one*.
+
+
 
 2. To start using your cluster, you need to run the following as a regular user:
 
@@ -93,6 +96,15 @@ Ubuntu 22.04 or higher</br>
 
         kubectl get nodes -o wide
 
-4. If you need to regenerate tokens for the joining worker nodes run the following:
 
         kubeadm token create --print-join-command
+
+## Install Networking Plugin
+1. Install the calico netowrk plugin by running the following:
+
+        kubectl apply -f docs.projectcalico.org/manifests/calico.yaml
+
+
+## Initialize Worker Nodes 
+
+NOTE:If you need to regenerate tokens for the joining worker nodes run the following:
