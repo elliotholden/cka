@@ -103,7 +103,7 @@ __NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (co
 ## Install Networking Plugin
 1. Install the calico netowrk plugin by running the following:
 
-        kubectl apply -f docs.projectcalico.org/manifests/calico.yaml
+        kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
 
 ## Initialize Worker Nodes 
