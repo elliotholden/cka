@@ -47,6 +47,7 @@ Ubuntu 22.04 or higher</br>
 
 ## Install containerd and kube tools (kubeadm, kubectl, kubelet)
 __NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (control and workers).
+
 1. Create the directory __~/repos__ and cd into it. Clone the Sander van Vugt CKA repo:
 
         git clone git@github.com:sandervanvugt/cka
