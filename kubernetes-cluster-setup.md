@@ -83,8 +83,6 @@ __NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (co
 1. Run __kubeadm init__ ONLY on the __control__ node<br/>
    >If you run __kubeadm init__ on any other nodes then you will end up with *multiple* clusters instead of just *one*.
 
-
-
 2. To start using your cluster, you need to run the following as a regular user:
 
         mkdir -p $HOME/.kube
@@ -97,21 +95,20 @@ __NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (co
 
         kubectl get nodes -o wide
 
-
-        kubeadm token create --print-join-command
-
 ## Install Networking Plugin
 1. Install the calico netowrk plugin by running the following:
 
         kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
-
 ## Initialize Worker Nodes 
-
-1. Change the IP address to the IP address of the API server. The __--token__ and __--discovery-token-ca-cert-hash__ should be relative toy our cluster.
-
-        kubeadm join 10.142.0.2:6443 --token m01jry.1bz7ntr2bgof59gm --discovery-token-ca-cert-hash sha256:1ae716d8075436f064b9f7f336bbdb8660557812cbb1e00b33dcc9c9036e70cf
 
 __NOTE:__ If you need to regenerate tokens for the joining worker nodes run the following on the *control* node:
 
         kubeadm token create --print-join-command
+
+1. Change the IP address to the IP address of *your* API server. The __--token__ and __--discovery-token-ca-cert-hash__ should be relative to your cluster.
+
+        kubeadm join 10.142.0.2:6443 --token m01jry.1bz7ntr2bgof59gm --discovery-token-ca-cert-hash sha256:1ae716d8075436f064b9f7f336bbdb8660557812cbb1e00b33dcc9c9036e70cf
+        kubeadm token create --print-join-command
+
+2. If you want to use __kubectl__ on the worker nodes, then you will need to create __.kube__ directory in your ~ home directory on the worker node and copy the __admin.conf__ from the __control__ node to __~/.kube/config__ on the worker node.
