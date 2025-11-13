@@ -102,13 +102,13 @@ __NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (co
 
 ## Initialize Worker Nodes 
 
-__NOTE:__ If you need to regenerate tokens for the joining worker nodes run the following on the *control* node:
+__NOTE:__ If you need to regenerate tokens for joining worker nodes to the cluster run the following on the *control* node:
 
         kubeadm token create --print-join-command
 
-1. Change the IP address to the IP address of *your* API server. The __--token__ and __--discovery-token-ca-cert-hash__ should be relative to your cluster.
+1. Change the IP address to the IP address of *your* API server. The __--token__ and __--discovery-token-ca-cert-hash__ should be relative to your cluster as well. The folloiwng is just and example and should not be used literally.
 
         kubeadm join 10.142.0.2:6443 --token m01jry.1bz7ntr2bgof59gm --discovery-token-ca-cert-hash sha256:1ae716d8075436f064b9f7f336bbdb8660557812cbb1e00b33dcc9c9036e70cf
         kubeadm token create --print-join-command
 
-2. If you want to use __kubectl__ on the worker nodes, then you will need to create __.kube__ directory in your ~ home directory on the worker node and copy the __admin.conf__ from the __control__ node to __~/.kube/config__ on the worker node.
+2. If you want to use __kubectl__ on the worker nodes, then you will need to create  a __.kube__ directory in your ~ home directory on the worker node and copy the /etc/kubernetes/__admin.conf__ file from the __control__ node to __~/.kube/config__ on the worker node.

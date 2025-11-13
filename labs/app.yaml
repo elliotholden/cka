@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: myapp
+  name: myapp
+spec:
+  volumes:
+  - name: my-vol
+    persistentVolumeClaim:
+      claimName: my-claim
+  containers:
+  - image: nginx
+    name: myapp
+    resources: {}
+    volumeMounts:
+    - name: my-vol
+      mountPath: /usr/share/nginx/html      
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
