@@ -3,8 +3,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    run: myapp
-  name: myapp
+    run: myapp 
+  name: nginx1 
 spec:
   volumes:
     - name: hostpath-vol
@@ -16,7 +16,7 @@ spec:
       resources: {}
       volumeMounts:
         - name: hostpath-vol
-          mountPath: ~/hostpath-mount-point
+          mountPath: /root/hostpath-mount-point
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}

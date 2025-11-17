@@ -4,19 +4,19 @@ kind: Pod
 metadata:
   labels:
     run: myapp
-  name: myapp
+  name: nginx2
 spec:
   volumes:
     - name: hostpath-vol
       persistentVolumeClaim:
-        claimName: test-dynamic-volume-claim
+        claimName: dynamic-vc
   containers:
     - image: nginx
       name: myapp
       resources: {}
       volumeMounts:
         - name: hostpath-vol
-          mountPath: ~/hostpath-mount-point
+          mountPath: /root/hostpath-mount-point
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
