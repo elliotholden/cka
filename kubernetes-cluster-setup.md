@@ -32,16 +32,18 @@ Ubuntu 22.04 or higher</br>
 
     - Add the following to the file you just created:
 
-            net.ipv4.ip_forward = 1
-            net.ipv6.conf.all.forwarding = 1
+          net.ipv4.ip_forward = 1
+          net.ipv6.conf.all.forwarding = 1
 
     - Activate the newly created systctl configuration
 
-            sudo sysctl -p /etc/sysctl.d/99-kubernetes-cri.conf
+          sudo sysctl -p /etc/sysctl.d/99-kubernetes-cri.conf
 
     - Check to make sure the settings have been saved:
 
-            sudo sysctl -a | grep -wE 'net.ipv4.ip_forward|net.ipv6.conf.all.forwarding'
+          sudo sysctl -a | grep -wE 'net.ipv4.ip_forward|net.ipv6.conf.all.forwarding'
+    -
+          sudo sysctl -a | grep -Ew 'net.ipv4.ip_forward|net.bridge.bridge-nf-call-iptables|net.ipv6.conf.all.forwarding|net.bridge.bridge-nf-call-ip6tables'
 
 **NOTE:** *Make sure to repeat the IP forwarding steps on the __worker-1__ and __worker-2__ nodes.*
 
