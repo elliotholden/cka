@@ -26,14 +26,21 @@ Ubuntu 22.04 or higher</br>
 
 ## Enable IP Forwarding (from within the OS)
 1. Enable IP forwarding on *each* __node__ from within the OS by doing the following from the command line:
-    - Create a file name __99-kubernetes-cri.conf__ inside the /etc/sysctl.d directory.
+
+   - The following __systctl__ kernel paremeters need to be set to __1__:
+
+         net.ipv4.ip_forward = 1<br />
+         net.ipv6.conf.all.forwarding = 1<br />
+         net.bridge.bridge-nf-call-iptables = 1<br />
+         net.bridge.bridge-nf-call-ip6tables = 1<br />
+
+    - Run the following command to check:
+
+          sudo sysctl -a | grep -Ew 'net.ipv4.ip_forward|net.bridge.bridge-nf-call-iptables|net.ipv6.conf.all.forwarding|net.bridge.bridge-nf-call-ip6tables'
+
+    - If any of those parameters are not set to __1__ then create a file named __99-kubernetes-cri.conf__ inside the /etc/sysctl.d directory and add them. The name of the file does not really matter as long as it ends in __.conf__
         
-            sudo vi /etc/sysctl.d/99-kubernetes-cri.conf 
-
-    - Add the following to the file you just created:
-
-          net.ipv4.ip_forward = 1
-          net.ipv6.conf.all.forwarding = 1
+          sudo vi /etc/sysctl.d/99-kubernetes-cri.conf 
 
     - Activate the newly created systctl configuration
 
@@ -41,8 +48,6 @@ Ubuntu 22.04 or higher</br>
 
     - Check to make sure the settings have been saved:
 
-          sudo sysctl -a | grep -wE 'net.ipv4.ip_forward|net.ipv6.conf.all.forwarding'
-    -
           sudo sysctl -a | grep -Ew 'net.ipv4.ip_forward|net.bridge.bridge-nf-call-iptables|net.ipv6.conf.all.forwarding|net.bridge.bridge-nf-call-ip6tables'
 
 **NOTE:** *Make sure to repeat the IP forwarding steps on the __worker-1__ and __worker-2__ nodes.*
