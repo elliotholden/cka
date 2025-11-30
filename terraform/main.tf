@@ -9,9 +9,9 @@ terraform {
 }
 
 provider "google" {
-  project = "$(gcloud config get-value project)"
+  project = "long-classifier-471101-r7"
   region  = "us-east1"
-  zone    = "us-east1-a"
+  zone    = "us-east1-b"
 }
 
 resource "google_compute_instance" "control-1" {
