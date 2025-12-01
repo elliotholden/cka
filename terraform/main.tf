@@ -32,7 +32,7 @@ resource "google_compute_instance" "c1" {
 
   metadata = {
     enable-osconfig = "TRUE"
-    ssh-keys        = "${var.ssh-public-key}"
+    ssh-keys        = "${var.ssh-public-key-1}, ${var.ssh-public-key-2}"
   }
 
   network_interface {
@@ -60,7 +60,7 @@ resource "google_compute_instance" "w1" {
 
   metadata = {
     enable-osconfig = "TRUE"
-    ssh-keys        = "${var.ssh-public-key}"
+    ssh-keys        = "${var.ssh-public-key-1}, ${var.ssh-public-key-2}'"
   }
 
   network_interface {
@@ -89,7 +89,7 @@ resource "google_compute_instance" "w2" {
 
   metadata = {
     enable-osconfig = "TRUE"
-    ssh-keys        = "${var.ssh-public-key}"
+    ssh-keys        = "${var.ssh-public-key-1}, ${var.ssh-public-key-2}"
   }
 
   network_interface {
