@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "google" {
-  project = "long-classifier-471101-r7"
+  project = "cka-lab-479912"
   region  = "us-east1"
   zone    = "us-east1-b"
 }
