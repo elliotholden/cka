@@ -9,9 +9,9 @@ terraform {
 }
 
 provider "google" {
-  project = "cka-lab-479912"
-  region  = "us-east1"
-  zone    = "us-east1-b"
+  project = var.project 
+  region  = var.region
+  zone    = var.zone
 }
 
 resource "google_compute_instance" "c1" {
@@ -32,12 +32,12 @@ resource "google_compute_instance" "c1" {
 
   metadata = {
     enable-osconfig = "TRUE"
-    ssh-keys        = "elliot:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN2NTmSuzXNu6PKMyTQG5j7BFYVuQwKMv/OetIHfkQvm elliot"
+    ssh-keys        = "${var.ssh-public-key}"
   }
 
   network_interface {
     access_config {}
-    subnetwork  = "projects/long-classifier-471101-r7/regions/us-east1/subnetworks/kubernetes-subnet"
+    subnetwork  = "projects/${var.project}/regions/us-east1/subnetworks/${var.subnet}"
   }
 
 }
@@ -60,12 +60,12 @@ resource "google_compute_instance" "w1" {
 
   metadata = {
     enable-osconfig = "TRUE"
-    ssh-keys        = "elliot:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN2NTmSuzXNu6PKMyTQG5j7BFYVuQwKMv/OetIHfkQvm elliot"
+    ssh-keys        = "${var.ssh-public-key}"
   }
 
   network_interface {
     access_config {}
-    subnetwork  = "projects/long-classifier-471101-r7/regions/us-east1/subnetworks/kubernetes-subnet"
+    subnetwork  = "projects/${var.project}/regions/us-east1/subnetworks/${var.subnet}"
   }
 
 }
@@ -89,12 +89,12 @@ resource "google_compute_instance" "w2" {
 
   metadata = {
     enable-osconfig = "TRUE"
-    ssh-keys        = "elliot:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN2NTmSuzXNu6PKMyTQG5j7BFYVuQwKMv/OetIHfkQvm elliot"
+    ssh-keys        = "${var.ssh-public-key}"
   }
 
   network_interface {
     access_config {}
-    subnetwork  = "projects/long-classifier-471101-r7/regions/us-east1/subnetworks/kubernetes-subnet"
+    subnetwork  = "projects/${var.project}/regions/us-east1/subnetworks/${var.subnet}"
   }
 
 }
