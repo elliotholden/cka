@@ -29,14 +29,16 @@ Ubuntu 22.04 or higher</br>
 
    - The following __systctl__ kernel paremeters need to be set to __1__:
 
-         net.ipv4.ip_forward = 1<br />
-         net.ipv6.conf.all.forwarding = 1<br />
-         net.bridge.bridge-nf-call-iptables = 1<br />
-         net.bridge.bridge-nf-call-ip6tables = 1<br />
+        net.ipv4.ip_forward = 1<br />
+        net.ipv6.conf.all.forwarding = 1<br />
+        net.bridge.bridge-nf-call-iptables = 1<br />
+        net.bridge.bridge-nf-call-ip6tables = 1<br />
 
     - Run the following command to check:
 
           sudo sysctl -a | grep -Ew 'net.ipv4.ip_forward|net.bridge.bridge-nf-call-iptables|net.ipv6.conf.all.forwarding|net.bridge.bridge-nf-call-ip6tables'
+
+        >There is a possibility you may not see __net.bridge.bridge-nf-call-iptables__ *and* __net.bridge.bridge-nf-call-ip6tables__ when running the __sysctl -a__ command.
 
     - If any of those parameters are not set to __1__ then create a file named __99-kubernetes-cri.conf__ inside the /etc/sysctl.d directory and add them. The name of the file does not really matter as long as it ends in __.conf__
         
@@ -53,7 +55,9 @@ Ubuntu 22.04 or higher</br>
 **NOTE:** *Make sure to repeat the IP forwarding steps on the __worker-1__ and __worker-2__ nodes.*
 
 ## Install containerd and kube tools (kubeadm, kubectl, kubelet)
-__NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (control and workers).
+__NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (control and workers). These steps leverage scripts written by Sander van Vugt.
+
+### Containerd
 
 1. Create the directory __~/repos__ and cd into it. Clone the Sander van Vugt CKA repo:
 
@@ -67,6 +71,7 @@ __NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (co
 
         systemctl status containerd
 
+### Kubernetes
 3. Install the kube tools (kubeadm, kubectl, kubelet) by running the __setup-kubetools.sh__ script.
 
         ~/repos/cka/setup-kubetools.sh
@@ -103,9 +108,11 @@ __NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (co
         kubectl get nodes -o wide
 
 ## Install Networking Plugin
+You can find the differenct releases for Calico here: https://github.com/projectcalico/calico/releases
+
 1. Install the calico netowrk plugin by running the following:
 
-        kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+        kubectl apply -f https://github.com/projectcalico/calico/releases/download/v3.30.5/calicoctl-linux-amd64 
 
 ## Initialize Worker Nodes 
 
