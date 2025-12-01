@@ -112,7 +112,7 @@ You can find the differenct releases for Calico here: https://github.com/project
 
 1. Install the calico netowrk plugin by running the following:
 
-        kubectl apply -f https://github.com/projectcalico/calico/releases/download/v3.30.5/calicoctl-linux-amd64 
+        kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.5/manifests/calico.yaml
 
 ## Initialize Worker Nodes 
 
