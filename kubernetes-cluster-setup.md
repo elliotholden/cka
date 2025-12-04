@@ -157,7 +157,7 @@ These instructions are for Kubernetes v1.34. taken from [Kubernetes.io](https://
 ## Install Networking Plugin
 You can find the installation insructions for Calico on the [Tigera](https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart ) website
 
-1. Install the calico netowrk plugin by running the following 2 dommands:
+1. Install the Calico netowrk plugin by running the following 2 commands:
 
        kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.2/manifests/tigera-operator.yaml
 
