@@ -55,9 +55,11 @@ Ubuntu 22.04 or higher</br>
 **NOTE:** *Make sure to repeat the IP forwarding steps on the __worker-1__ and __worker-2__ nodes.*
 
 ## Install containerd and kube tools (kubeadm, kubectl, kubelet)
-__NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (control and workers). These steps leverage scripts written by Sander van Vugt.
+__NOTE:__ The following steps for installing __containerd__ and __kubetools__ are to be done on ALL nodes (control and workers). There are 2 different options for each installation procedure. The first option leverages scripts written by [Sander van Vugt](https://github.com/sandervanvugt/cka). The second option is the more manual approace that you really SHOULD learn anyway.
 
 ### Containerd
+
+#### OPTION 1 - Super EASY - using [Sander van Vugt](https://github.com/sandervanvugt/cka) scripts
 
 1. Create the directory __~/repos__ and cd into it. Clone the Sander van Vugt CKA repo:
 
@@ -67,16 +69,24 @@ __NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (co
 
         ~/repos/cka/setup-container.sh
 
-    Verfiy __containerd__ is running:
+3. Verfiy __containerd__ is running:
 
         systemctl status containerd
 
-### Kubernetes
-3. Install the kube tools (kubeadm, kubectl, kubelet) by running the __setup-kubetools.sh__ script.
+#### OPTION 2 - Manual install using the [Getting Started](https://github.com/containerd/containerd/blob/main/docs/getting-started.md) docs from the Containerd github repo.
+
+1. Follow the [Getting Started](https://github.com/containerd/containerd/blob/main/docs/getting-started.md) documentation to install [__containerd__](https://github.com/containerd/containerd/releases)
+2. Follow the [Getting Started](https://github.com/containerd/containerd/blob/main/docs/getting-started.md) documentation to install [__runc__](https://github.com/opencontainers/runc/releases)
+3. Follow the [Getting Started](https://github.com/containerd/containerd/blob/main/docs/getting-started.md) documentaion to install [__CNI plugins__](https://github.com/containernetworking/plugins/releases)
+4. Verify containerd is running.
+
+### Kubernetes - kubetools
+#### OPTION 1 - Super EASY - using [Sander van Vugt](https://github.com/sandervanvugt/cka) scripts
+1. Assuming you've already clone the __cka__ repo from Sander van Vugt github - Install the kube tools (kubeadm, kubectl, kubelet) by running the __setup-kubetools.sh__ script.
 
         ~/repos/cka/setup-kubetools.sh
 
-4. Verify __kubeadm__, __kubectl__, and __kubelet__ are installed and that the kubelet service is running:
+2. Verify __kubeadm__, __kubectl__, and __kubelet__ are installed and that the kubelet service is running:
 
         which kubeadm kubectl kubelet
 
@@ -87,6 +97,43 @@ __NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (co
         kubectl version
         kubeadm version
         kubelet --version
+
+#### OPTION 2 - Manual install using k8s repos
+These instructions are for Kubernetes v1.34. taken from [Kubernetes.io](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
+1.  Update the apt package index and install packages needed to use the Kubernetes apt repository:
+
+       > apt-transport-https may be a dummy package; if so, you can skip that package
+
+
+        sudo apt-get update
+        sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+
+2. Download the public signing key for the Kubernetes package repositories. The same signing key is used for all repositories so you can disregard the version in the URL:
+
+    > If the directory `/etc/apt/keyrings` does not exist, it should be created before the curl command, read the note below.
+
+    >sudo mkdir -p -m 755 /etc/apt/keyrings
+
+       curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.34/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+      >Note: In releases older than Debian 12 and Ubuntu 22.04, directory /etc/apt/keyrings does not exist by default, and it should be created before the curl command.
+
+3. Add the appropriate Kubernetes apt repository. Please note that this repository have packages only for Kubernetes 1.34; for other Kubernetes minor versions, you need to change the Kubernetes minor version in the URL to match your desired minor version (you should also check that you are reading the documentation for the version of Kubernetes that you plan to install).
+
+      This overwrites any existing configuration in /etc/apt/sources.list.d/kubernetes.list
+
+       echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.34/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+      Update the apt package index, install kubelet, kubeadm and kubectl, and pin their version:
+
+       sudo apt-get update
+       sudo apt-get install -y kubelet kubeadm kubectl
+       sudo apt-mark hold kubelet kubeadm kubectl
+
+      (Optional) Enable the kubelet service before running kubeadm:
+
+       sudo systemctl enable --now kubelet
+
 
 *The kubelet may not actually be running until the a cluster has been initialized on the Control Node (or in the case of the worker nodes, if they've actually joined a cluster)*
 
@@ -108,11 +155,13 @@ __NOTE:__ The following steps (installing kubetools) to be done on ALL nodes (co
         kubectl get nodes -o wide
 
 ## Install Networking Plugin
-You can find the differenct releases for Calico here: https://github.com/projectcalico/calico/releases
+You can find the installation insructions for Calico on the [Tigera](https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart ) website
 
-1. Install the calico netowrk plugin by running the following:
+1. Install the Calico netowrk plugin by running the following 2 commands:
 
-        kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.5/manifests/calico.yaml
+       kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.2/manifests/tigera-operator.yaml
+
+       kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.31.2/manifests/custom-resources.yaml
 
 ## Initialize Worker Nodes 
 
