@@ -16,8 +16,8 @@ provider "google" {
 
 resource "google_compute_instance" "c1" {
 
-  name            = "control-1"
-  hostname        = "c1.cka"
+  name            = "control-1-simple"
+  hostname        = "c1-simple.cka"
   machine_type    = "e2-small"
   can_ip_forward  = true
   tags            = ["http-server"]
@@ -44,8 +44,8 @@ resource "google_compute_instance" "c1" {
 
 resource "google_compute_instance" "w1" {
 
-  name            = "worker-1"
-  hostname        = "w1.cka"
+  name            = "worker-1-simple"
+  hostname        = "w1-simple.cka"
   machine_type    = "e2-small"
   can_ip_forward  = true
   tags            = ["http-server"]
@@ -72,8 +72,8 @@ resource "google_compute_instance" "w1" {
 
 resource "google_compute_instance" "w2" {
 
-  name            = "worker-2"
-  hostname        = "w2.cka"
+  name            = "worker-2-simple"
+  hostname        = "w2-simple.cka"
   machine_type    = "e2-small"
   can_ip_forward  = true
   tags            = ["http-server"]
