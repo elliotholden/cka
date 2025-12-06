@@ -1,0 +1,6 @@
+syntax on
+set number
+color desert
+set expandtab
+set tabstop=2
+set shiftwidth=2

@@ -1,15 +1,18 @@
 ---
 - name: Update apt package cache
+  become: true
   ansible.builtin.apt:
     update_cache: true
     cache_valid_time: 3600
 
 - name: Upgrade all packages (equivalent to apt-get upgrade - safe)
+  become: true
   ansible.builtin.apt:
     upgrade: safe  # Only upgrades, doesn't remove packages
     autoremove: true  # Cleans up unused dependencies
 
 - name: Create emwg user
+  become: true
   user:
     name: "{{ user }}"
     state: present
@@ -18,16 +21,37 @@
     append: true
 
 - name: Set emwg password
+  become: true
   user:
     name: "{{ user }}"
     password: "{{ password }}"
 
 - name: Add SSH key for emwg user
+  become: true
   authorized_key:
     user: "{{ user }}"
     state: present
     key: "{{ public_ssh_key }}"
     # key: "{{ lookup('file', '~/.ssh/emwg_rsa.pub') }}"
+
+# - name: Quick check
+#  shell: |
+#    echo "User: $(whoami)"
+#    echo "Public key: $(ssh-add -L 2>/dev/null | head -1 | cut -d ' ' -f2)"
+#    ssh -T -o StrictHostKeyChecking=no git@github.com 2>&1 | grep -i success || true
+#  register: quick_check
+
+# - debug:
+#    var: quick_check.stdout_lines
+
+- name: Clone CKA repository
+  git:
+    repo: "git@github.com:sandervanvugt/cka.git"
+    dest: "/home/emwg/repos/cka"
+    clone: yes
+    update: no
+    force: yes
+    accept_hostkey: yes
 
 - name: Deploy .editrc file
   ansible.builtin.copy:
@@ -41,6 +65,14 @@
   ansible.builtin.copy:
     src: bash_aliases
     dest: /home/emwg/.bash_aliases
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0644'
+
+- name: Deploy .vimrc file
+  ansible.builtin.copy:
+    src: vimrc 
+    dest: /home/emwg/.vimrc
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: '0644'
@@ -62,17 +94,9 @@
     mode: '0644'
 
 - name: Install packages (apt-file tree)
+  become: true
   ansible.builtin.apt:
     name:
       - apt-file
       - tree
     state: present
-
-- name: Clone CKA repository
-  git:
-    repo: "git@github.com:sandervanvugt/cka.git"
-    dest: "/home/emwg/repos/"
-    clone: yes
-    update: no
-    force: yes
-    accept_hostkey: yes
