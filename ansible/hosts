@@ -1,0 +1,7 @@
+[control-nodes]
+control1 ansible_host=control-1-simple #ansible_user=<REMOTE_USER>
+
+[worker-nodes]
+worker1 ansible_host=worker-1-simple
+worker2 ansible_host=worker-2-simple
+worker3 ansible_host=worker-3-simple

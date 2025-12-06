@@ -1,0 +1,78 @@
+---
+- name: Update apt package cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Upgrade all packages (equivalent to apt-get upgrade - safe)
+  ansible.builtin.apt:
+    upgrade: safe  # Only upgrades, doesn't remove packages
+    autoremove: true  # Cleans up unused dependencies
+
+- name: Create emwg user
+  user:
+    name: "{{ user }}"
+    state: present
+    shell: /bin/bash
+    groups: google-sudoers
+    append: true
+
+- name: Set emwg password
+  user:
+    name: "{{ user }}"
+    password: "{{ password }}"
+
+- name: Add SSH key for emwg user
+  authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: "{{ public_ssh_key }}"
+    # key: "{{ lookup('file', '~/.ssh/emwg_rsa.pub') }}"
+
+- name: Deploy .editrc file
+  ansible.builtin.copy:
+    src: editrc
+    dest: /home/emwg/.editrc
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0644'
+
+- name: Deploy .bash_aliases file
+  ansible.builtin.copy:
+    src: bash_aliases
+    dest: /home/emwg/.bash_aliases
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0644'
+
+- name: Ensure .config/procps directory exists
+  file:
+    path: /home/emwg/.config/procps
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0755'
+
+- name: Deploy toprc file
+  ansible.builtin.copy:
+    src: toprc
+    dest: /home/emwg/.config/procps/toprc
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0644'
+
+- name: Install packages (apt-file tree)
+  ansible.builtin.apt:
+    name:
+      - apt-file
+      - tree
+    state: present
+
+- name: Clone CKA repository
+  git:
+    repo: "git@github.com:sandervanvugt/cka.git"
+    dest: "/home/emwg/repos/"
+    clone: yes
+    update: no
+    force: yes
+    accept_hostkey: yes
