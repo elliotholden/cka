@@ -113,6 +113,24 @@
     var: sysctl_result.stdout_lines
   when: sysctl_result.stdout_lines | length > 0
 
+- name: Run setup-container.sh script
+  become: true
+  shell:
+    cmd: "/home/emwg/repos/cka/setup-container.sh"
+    chdir: "/home/emwg/repos/cka/"
+  args:
+    executable: /bin/bash
+  ignore_errors: yes
+
+- name: Run setup-kubetools.sh script
+  become: true
+  shell:
+    cmd: "/home/emwg/repos/cka/setup-kubetools.sh"
+    chdir: "/home/emwg/repos/cka/"
+  args:
+    executable: /bin/bash
+  ignore_errors: yes
+
 - name: Install packages (apt-file tree)
   become: true
   ansible.builtin.apt:
