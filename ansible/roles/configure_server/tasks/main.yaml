@@ -122,6 +122,12 @@
     executable: /bin/bash
   ignore_errors: yes
 
+- name: Remove kubernetes apt keyring if it exists
+  become: true
+  file:
+    path: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    state: absent
+
 - name: Run setup-kubetools.sh script
   become: true
   shell:
