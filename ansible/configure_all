@@ -2,4 +2,4 @@
 - name: Configure all hosts
   hosts: all
   roles:
-    - configure_server
+    - configure_all_nodes

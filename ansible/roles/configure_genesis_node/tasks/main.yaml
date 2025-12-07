@@ -1,0 +1,65 @@
+---
+- name: Check if kubeadm init has already been run
+  stat:
+    path: /etc/kubernetes/admin.conf
+  register: admin_conf_exists
+  changed_when: false
+
+- name: Initialize Kubernetes control plane with kubeadm
+  become: true
+  command: kubeadm init --pod-network-cidr=192.168.0.0/16
+  args:
+    creates: /etc/kubernetes/admin.conf
+  when: not admin_conf_exists.stat.exists
+  register: kubeadm_init
+  async: 300
+  poll: 10
+
+- name: Display kubeadm init output
+  debug:
+    var: kubeadm_init.stdout_lines
+  when: 
+    - kubeadm_init is defined
+    - kubeadm_init.skipped == false  # Only if task wasn't skipped
+    - kubeadm_init.stdout_lines is defined
+
+- name: Ensure .kube directory exists for emwg user
+  file:
+    path: /home/emwg/.kube
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}" 
+    mode: '0700'
+
+- name: Copy admin.conf to emwg user's kubeconfig
+  become: true
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /home/emwg/.kube/config
+    remote_src: yes
+    owner: "{{ user }}" 
+    group: "{{ user }}" 
+    mode: '0600'
+  register: kubeconfig_copy
+
+- name: Set KUBECONFIG environment variable for emwg user
+  lineinfile:
+    path: /home/emwg/.bash_aliases
+    line: 'export KUBECONFIG=/home/emwg/.kube/config'
+    create: yes
+    owner: "{{ user }}"
+    group: "{{ user }}"
+  when: kubeconfig_copy is changed
+
+# - name: Verify kubectl works for emwg user
+#   shell: |
+#     kubectl cluster-info
+#     kubectl get nodes
+#   register: kubectl_test
+#   changed_when: false
+#   ignore_errors: yes
+
+# - name: Display kubectl test results
+#   debug:
+#     var: kubectl_test.stdout_lines
+#   when: kubectl_test.stdout_lines | length > 0

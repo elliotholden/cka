@@ -1,5 +1,5 @@
 [control_nodes]
-control1 ansible_host=control-1-simple #ansible_user=<REMOTE_USER>
+genesis ansible_host=control-1-simple #ansible_user=<REMOTE_USER>
 
 [worker_nodes]
 worker1 ansible_host=worker-1-simple

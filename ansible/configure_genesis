@@ -1,0 +1,5 @@
+---
+- name: Configure genesis node
+  hosts: genesis
+  roles:
+    - configure_genesis_node
