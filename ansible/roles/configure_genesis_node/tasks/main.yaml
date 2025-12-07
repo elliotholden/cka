@@ -63,3 +63,7 @@
 #   debug:
 #     var: kubectl_test.stdout_lines
 #   when: kubectl_test.stdout_lines | length > 0
+
+- name: Install Calico network plugin
+  shell: |
+    kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
