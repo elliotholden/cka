@@ -113,22 +113,38 @@
     var: sysctl_result.stdout_lines
   when: sysctl_result.stdout_lines | length > 0
 
+- name: Check if containerd is installed
+  shell: command -v containerd
+  register: containerd_check
+  ignore_errors: yes
+  changed_when: false
+
 - name: Run setup-container.sh script
-  become: true
   shell:
     cmd: "/home/emwg/repos/cka/setup-container.sh"
     chdir: "/home/emwg/repos/cka/"
   args:
     executable: /bin/bash
   ignore_errors: yes
+  when: containerd_check.rc != 0
+  register: container_setup_result
+  async: 600  # 10 minute timeout for installation
+  poll: 30    # Check every 30 seconds
 
-- name: Remove kubernetes apt keyring if it exists
+- name: Check if kubelet is installed
+  shell: command -v kubelet
+  register: kubelet_check
+  ignore_errors: yes
+  changed_when: false
+
+- name: Remove kubernetes apt keyring if kubelet is not installed
   become: true
   file:
     path: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
     state: absent
+  when: kubelet_check.rc != 0
 
-- name: Run setup-kubetools.sh script
+- name: Run setup-kubetools.sh script is kubelet is not installed
   become: true
   shell:
     cmd: "/home/emwg/repos/cka/setup-kubetools.sh"
@@ -136,6 +152,18 @@
   args:
     executable: /bin/bash
   ignore_errors: yes
+  when: kubelet_check.rc != 0
+  register: kubelet_setup_result
+  async: 600  # 10 minute timeout for installation
+  poll: 30    # Check every 30 seconds
+
+- name: Ensure .kube directory exists
+  file:
+    path: /home/emwg/.kube
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: '0700'
 
 - name: Install packages (apt-file tree)
   become: true
