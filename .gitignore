@@ -5,7 +5,8 @@
 
 # Terraform
 .terraform/
-*terraform*
+# *terraform*
+*tfstate*
 
 # Node artifact files
 node_modules/
