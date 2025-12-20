@@ -43,6 +43,39 @@ Both the __client certificate__ (used in _.kube/config_) and the __server certfi
 - Used for: API server verifying user identity
 
 
+### Visual comparison:
+    X.509 Certificate Template:
+
+    ├── Version
+    ├── Serial Number
+    ├── Signature Algorithm
+    ├── Issuer (CA info)
+    ├── Validity Period
+    ├── Subject:
+    │   ├── CN (Common Name)          ← Used differently!
+    │   └── O (Organization)          ← Used differently!
+    ├── Subject Public Key Info
+    ├── X509v3 Extensions:
+    │   ├── Subject Alternative Name  ← Used differently!
+    │   ├── Key Usage                 ← Different flags!
+    │   └── Extended Key Usage        ← Different purposes!
+    └── Signature (CA's signature)
+
+### Check the differences:
+
+    # API Server cert:
+    openssl x509 -in apiserver.crt -noout -text | grep -i "key usage"
+    # Key Usage: Digital Signature, Key Encipherment
+    # Extended Key Usage: TLS Web Server Authentication
+
+    # User cert:
+    openssl x509 -in user.crt -noout -text | grep -i "key usage"  
+    # Key Usage: Digital Signature, Key Encipherment
+    # Extended Key Usage: TLS Web Client Authentication
+
+
+## SANs
+
 ### How to see what SANs your API server is configured for:
 The Subject Alternative Names are the names that your Kubernetes API server can be accessed by.
 
@@ -62,6 +95,10 @@ You can skip the TLS verification step, thus being able to acces your cluster by
 
     kubectl -n kube-system --insecure-skip-tls-verify=true get pods
 
+<br /><br />
+## Differences between ca.crt and apiserver.crt
+__/etc/kubernetes/pki/ca.crt__ <br />
+__/etc/kubernetes/pki/apiserver.crt__
 
 ### What does the certificate-authority-data in .kube/config refer to?
 
