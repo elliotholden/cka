@@ -23,7 +23,7 @@ __CSR__ - Certficate Signing Request
 
 ## Client Certificate and Server Certificate differences:
 
-Both the __client certificate__ (used in _.kube/config_) and the __server certficated__ (located on the controlplane node in _/etc/kubernetes/pki/apiserver.crt_) use the same X.509 format, but with different extensions and purposes. The API server cert needs __SANs__ for hostname validation, while user certs use __CN__ for identity (SANs ignored). This is standard TLS client/server certificate separation, not Kubernetes-specific.
+Both the __client certificate__ (used in _.kube/config_) and the __server certficate__ (located on the controlplane node in _/etc/kubernetes/pki/apiserver.crt_) use the same X.509 format, but with different extensions and purposes. The API server cert needs __SANs__ for hostname validation, while user certs use __CN__ for identity (SANs ignored). This is standard TLS client/server certificate separation, not Kubernetes-specific.
 
 ### API Server Certificate (apiserver.crt):
 - Type: Server certificate
