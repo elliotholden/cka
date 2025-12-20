@@ -8,7 +8,7 @@ In the is lab we will learn how to creating credentials to authenticate with a K
 __SANs__ - Subject Alternative Names<br />
 __CSR__ - Certficate Signing Request
 
-### Create client cert for authentication with Kubernetes
+## Create client cert for authentication with Kubernetes
 1. In the example below we generate a Private Key file named "tobin.key"
 
         openssl genrsa -out tobin.key 2048
@@ -20,6 +20,28 @@ __CSR__ - Certficate Signing Request
 3. Finally we sign the csr and generate the certificate. This step will need access to the private key and certificate of the Kubernetes Certificate Authority (CA). These files will typically reside on the Kubernetes control node in the following the directory: ___/etc/kubernetes/pki___. The following command will create a cert that is valid for 30 days.
 
         sudo opensll x509 -req -in tobin.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out tobin.crt -days 30
+
+## Client Certificate and Server Certificate differences:
+
+Both the __client certificate__ (used in _.kube/config_) and the __server certficated__ (located on the controlplane node in _/etc/kubernetes/pki/apiserver.crt_) use the same X.509 format, but with different extensions and purposes. The API server cert needs __SANs__ for hostname validation, while user certs use __CN__ for identity (SANs ignored). This is standard TLS client/server certificate separation, not Kubernetes-specific.
+
+### API Server Certificate (apiserver.crt):
+- Type: Server certificate
+- Purpose: Identifies the server (Kubernetes API)
+- SANs: REQUIRED for TLS validation
+- CN: Mostly ignored (deprecated for servers)
+- Location: On API server node, presented during TLS handshake
+- Used for: Clients verifying they're talking to the real API server
+
+### User/Client Certificate (in .kube/config):
+- Type: Client certificate
+- Purpose: Identifies the user/client
+- SANs: Optional (and ignored for Kubernetes auth)
+- CN: USED as username for RBAC
+- O fields: Used as group membership
+- Location: In client's kubeconfig, sent during TLS handshake
+- Used for: API server verifying user identity
+
 
 ### How to see what SANs your API server is configured for:
 The Subject Alternative Names are the names that your Kubernetes API server can be accessed by.
