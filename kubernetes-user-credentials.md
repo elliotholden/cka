@@ -31,7 +31,7 @@ In the is lab we will learn how to create client credentials to authenticate wit
 
 ## Use a Client Cert in a Kube Config File 
 
-To use a client __cert__ and __private key__ in a kube config file (for example: ~/.kube/config) you have 2 options: You can use either __A.__ the __client-certificate__ and __client-key__ fields or __B.__ the __client-certificate-data__ and __client-key-data__ fields. The _data_ fields are expecting a __base64__ string of your __cert__ and __private key__ while the _NON-data_ fields are expecting the location path of the actual __cert__ and __private key__ files.
+To use a client __cert__ and __private key__ in a kube config file (for example: ~/.kube/config) you have 2 options: You can use either __A.__ the __client-certificate__ and __client-key__ fields or __B.__ the __client-certificate-data__ and __client-key-data__ fields in the kube config file. The _data_ fields are expecting a __base64__ string of your __cert__ and __private key__ while the _NON-data_ fields are expecting the location path of the actual __cert__ and __private key__ files.
 
 ### EXAMPLES
 
@@ -51,6 +51,10 @@ __client-certificate__ and __client-key__
         client-certificate: /Users/emwg/Documents/tobin/tobin.crt
         client-key: /Users/emwg/Documents/tobin/tobin.key
 
+To create the __base64__ string needed in the _data_ fields do the following:
+
+    base64 -i /Users/emwg/Documents/tobin/tobin.crt | tr -d '\n'
+    base64 -i /Users/emwg/Documents/tobin/tobin.key | tr -d '\n'
 
 <br>
 
