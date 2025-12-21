@@ -15,7 +15,7 @@ In the is lab we will learn how to create client credentials to authenticate wit
 <br>
 1. First we generate a Private Key file named "tobin.key"
 
-        openssl genrsa -out tobin.key 2048
+    openssl genrsa -out tobin.key 2048
 <br>
 2. Next we generate the Certificate Signing Request (CSR)
 
