@@ -19,11 +19,11 @@ In the is lab we will learn how to create client credentials to authenticate wit
 <br>
 2. Next we generate the Certificate Signing Request (CSR)
 
-       openssl req -new -key tobin.key --subj "/CN=tobin/O=k8s" -out tobin.csr
+    openssl req -new -key tobin.key --subj "/CN=tobin/O=k8s" -out tobin.csr
 <br>
 3. Finally we sign the csr and generate the certificate. This step will need access to the private key and certificate of the Kubernetes Certificate Authority (CA). These files will typically reside on the Kubernetes control node in the following the directory: ___/etc/kubernetes/pki___. The following command will create a cert that is valid for 30 days.
 
-       sudo opensll x509 -req -in tobin.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out tobin.crt -days 30
+    sudo opensll x509 -req -in tobin.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out tobin.crt -days 30
 <br>
 
 >__IMPORTANT NOTES:__ The __private key__ and __csr__ could and "probably" should be created by the end user who is going to use the __cert__ and __private key__ in _their_ .kube/config file. They would then submit the __csr__ to the Kubernetes admin for signing and cert generation. The Kubernetes admin whould then deliver the __cert__ to the end user. Best practice would suggest that the end user NOT share their __private key__ with anyone. The end user would then add their __private key__ and __cert__ (that they received from the Kubernetes admin) to their ~/.kube/config file.
@@ -191,18 +191,16 @@ Sometimes you need to add extra SANs to a cert or delete (or maybe fix) a SAN th
     sudo cp /etc/kubernetes/pki/apiserver.crt /etc/kubernetes/pki/apiserver.crt.backup
 
 ### Generate new cert with all required SANs
-
+<br>
 1. Create a new CSR using the original private key:
 
-       sudo openssl req -new -key /etc/kubernetes/pki/apiserver.key -subj "/CN=kube-apiserver" -addext "subjectAltName = DNS:anjuna.elliotmywebguycom,DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc,DNS:kubernetes.default.svc.cluster.local,IP:10.96.0.1,IP:10.142.0.2,IP:34.74.64.149" -out /tmp/apiserver.csr
-
+    sudo openssl req -new -key /etc/kubernetes/pki/apiserver.key -subj "/CN=kube-apiserver" -addext "subjectAltName = DNS:anjuna.elliotmywebguycom,DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc,DNS:kubernetes.default.svc.cluster.local,IP:10.96.0.1,IP:10.142.0.2,IP:34.74.64.149" -out /tmp/apiserver.csr
+<br>
 2. Sign the newly created CSR with the CA credentials
 
-
-       sudo openssl x509 -req -in /tmp/apiserver.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /etc/kubernetes/pki/apiserver.crt -days 365 -copy_extensions copy
-
-
+    sudo openssl x509 -req -in /tmp/apiserver.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /etc/kubernetes/pki/apiserver.crt -days 365 -copy_extensions copy
+<br>
 3. Restart the kube-apiserver
 
-
-       sudo systemctl restart kube-apiserver
+    sudo systemctl restart kube-apiserver
+<br>
