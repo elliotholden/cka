@@ -2,30 +2,42 @@
 
 ## Introdction
 
-In the is lab we will learn how to creating credentials to authenticate with a Kubernetes cluster. We will start with generating a private key, then creating a CSR and finally siging the CSR which is the process will create the CERT. All of these steps will be done using the __openssl__ command.
+In the is lab we will learn how to create client credentials to authenticate with a Kubernetes cluster. We will start with generating a private key, then create a CSR, and finally sign the CSR (which in the process will create the actual CERT). All of these steps will be done using the __openssl__ command.
 
 ### Key Terms
-__SANs__ - Subject Alternative Names<br />
-__CSR__ - Certficate Signing Request
+- __SANs__ - Subject Alternative Names<br>
+- __CSR__ - Certficate Signing Request<br>
+- __CN__ - Common Name
 
-## Create client cert for authentication with Kubernetes
-1. In the example below we generate a Private Key file named "tobin.key"
+<br>
+
+## Create a Client Cert for Authentication with Kubernetes
+1. First we generate a Private Key file named "tobin.key"
 
         openssl genrsa -out tobin.key 2048
 
 2. Next we generate the Certificate Signing Request (CSR)
 
-        openssl req -new -key tobin.key --subj "/CN=tobin/O=k8s" -out tobin.csr
+       openssl req -new -key tobin.key --subj "/CN=tobin/O=k8s" -out tobin.csr
 
 3. Finally we sign the csr and generate the certificate. This step will need access to the private key and certificate of the Kubernetes Certificate Authority (CA). These files will typically reside on the Kubernetes control node in the following the directory: ___/etc/kubernetes/pki___. The following command will create a cert that is valid for 30 days.
 
-        sudo opensll x509 -req -in tobin.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out tobin.crt -days 30
-<br/>
+       sudo opensll x509 -req -in tobin.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out tobin.crt -days 30
+<br>
 
+>__IMPORTANT NOTES:__ The __private key__ and __csr__ could and "probably" should be created by the end user who is going to use the __cert__ and __private key__ in _their_ .kube/config file. They would then submit the __csr__ to the Kubernetes admin for signing and cert generation. The Kubernetes admin whould then deliver the __cert__ to the end user. Best practice would suggest that the end user NOT share their __private key__ with anyone. The end user would then add their __private key__ and __cert__ (that they received from the Kubernetes admin) to their ~/.kube/config file.
+
+<br>
+
+## Use a Client Cert in a Kube Config File 
+
+To use a client __cert__ and __private key__ in a kube config file (for example: ~/.kube/config) you have 2 options. You can use either the __client-certificate__ and __client-key__ fields or the __client-certificate-data__ and __client-key-data__ fields. The _data_ files are expecting a __base64__ string of your __cert__ and __private key__ while the _NON data_ fields are expecting the file path location of the actual __cert__ and __private key__ files.
+ 
+<br>
 
 ## Client Certificate and Server Certificate differences:
 
-Both the __client certificate__ (used in _.kube/config_) and the __server certficate__ (located on the controlplane node in _/etc/kubernetes/pki/apiserver.crt_) use the same X.509 format, but with different extensions and purposes. The API server cert needs __SANs__ for hostname validation, while user certs use __CN__ for identity (SANs ignored). This is standard TLS client/server certificate separation, not Kubernetes-specific.
+Both a __client certificate__ (used in _.kube/config_) and a __server certficate__ (for example: __apiserver.crt__ located on the controlplane node in _/etc/kubernetes/pki/apiserver.crt_) use the same X.509 format, but with different extensions and purposes. The API server cert needs __SANs__ for hostname validation, while user certs use __CN__ for identity (SANs ignored). This is standard TLS client/server certificate separation, not Kubernetes-specific.
 
 ### API Server Certificate (apiserver.crt):
 - Type: Server certificate
