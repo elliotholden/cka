@@ -20,6 +20,7 @@ In the is lab we will learn how to create client credentials to authenticate wit
 
        openssl req -new -key tobin.key --subj "/CN=tobin/O=k8s" -out tobin.csr
 
+
 3. Finally we sign the csr and generate the certificate. This step will need access to the private key and certificate of the Kubernetes Certificate Authority (CA). These files will typically reside on the Kubernetes control node in the following the directory: ___/etc/kubernetes/pki___. The following command will create a cert that is valid for 30 days.
 
        sudo opensll x509 -req -in tobin.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out tobin.crt -days 30
