@@ -199,7 +199,6 @@ Sometimes you need to add extra SANs to a cert or delete (or maybe fix) a SAN th
 2. Sign the newly created CSR with the CA credentials
 
        sudo openssl x509 -req -in /tmp/apiserver.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /etc/kubernetes/pki/apiserver.crt -days 365 -copy_extensions copy
-<br />
 
 3. Restart the kube-apiserver
 
