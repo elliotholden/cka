@@ -193,13 +193,13 @@ Sometimes you need to add extra SANs to a cert or delete (or maybe fix) a SAN th
 ### Generate new cert with all required SANs
 
 1. Create a new CSR using the original private key:
-
+<br>
        sudo openssl req -new -key /etc/kubernetes/pki/apiserver.key -subj "/CN=kube-apiserver" -addext "subjectAltName = DNS:anjuna.elliotmywebguycom,DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc,DNS:kubernetes.default.svc.cluster.local,IP:10.96.0.1,IP:10.142.0.2,IP:34.74.64.149" -out /tmp/apiserver.csr
 
 2. Sign the newly created CSR with the CA credentials
-
+<br>
        sudo openssl x509 -req -in /tmp/apiserver.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /etc/kubernetes/pki/apiserver.crt -days 365 -copy_extensions copy
 
 3. Restart the kube-apiserver
-
+<br>
         sudo systemctl restart kube-apiserver
