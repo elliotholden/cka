@@ -166,7 +166,7 @@ Create a new CSR using the original private key:
 
 Sign the newly created CSR with the CA credentials
 
-2.     sudo openssl x509 -req -in /tmp/apiserver.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /etc/kubernetes/pki/apiserver.crt -days 365
+2.     sudo openssl x509 -req -in /tmp/apiserver.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /etc/kubernetes/pki/apiserver.crt -days 365 -copy_extensions copy
 <br />
 
 Resert the kube-apiserver
