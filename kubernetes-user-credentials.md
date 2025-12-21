@@ -51,10 +51,7 @@ __client-certificate__ and __client-key__
         client-certificate: /Users/emwg/Documents/tobin/tobin.crt
         client-key: /Users/emwg/Documents/tobin/tobin.key
 
-To create the __base64__ string needed in the _data_ fields do the following:
-
-    base64 -i /Users/emwg/Documents/tobin/tobin.crt | tr -d '\n'
-    base64 -i /Users/emwg/Documents/tobin/tobin.key | tr -d '\n'
+>__\*****IMPORTANT NOTE\*\*\***__ <br><br> To create the __base64__ strings needed in the *_data_* fields do the following: <br><br> base64 -i /Users/emwg/Documents/tobin/tobin.crt | tr -d '\n' <br> base64 -i /Users/emwg/Documents/tobin/tobin.key | tr -d '\n'
 
 <br>
 
