@@ -161,14 +161,14 @@ Sometimes you need to add extra SANs to a cert or delete (or maybe fix) a SAN th
 
 Create a new CSR using the original private key:
 
-1.      sudo openssl req -new -key /etc/kubernetes/pki/apiserver.key -subj "/CN=kube-apiserver" -addext "subjectAltName = DNS:anjuna.elliotmywebguycom,DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc,DNS:kubernetes.default.svc.cluster.local,IP:10.96.0.1,IP:10.142.0.2,IP:34.74.64.149" -out /tmp/apiserver.csr
+1.     sudo openssl req -new -key /etc/kubernetes/pki/apiserver.key -subj "/CN=kube-apiserver" -addext "subjectAltName = DNS:anjuna.elliotmywebguycom,DNS:kubernetes,DNS:kubernetes.default,DNS:kubernetes.default.svc,DNS:kubernetes.default.svc.cluster.local,IP:10.96.0.1,IP:10.142.0.2,IP:34.74.64.149" -out /tmp/apiserver.csr
 <br />
 
 Sign the newly created CSR with the CA credentials
 
-2.      sudo openssl x509 -req -in /tmp/apiserver.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /etc/kubernetes/pki/apiserver.crt -days 365
+2.     sudo openssl x509 -req -in /tmp/apiserver.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out /etc/kubernetes/pki/apiserver.crt -days 365
 <br />
 
 Resert the kube-apiserver
 
-3.      sudo systemctl restart kube-apiserver
+3.     sudo systemctl restart kube-apiserver
