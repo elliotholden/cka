@@ -189,9 +189,8 @@ __/etc/kubernetes/pki/apiserver.crt__
 # Update the apiserver.crt file
 Sometimes you need to add extra SANs to a cert or delete (or maybe fix) a SAN that was incorrectly entered when you initially created the cert. To do this, you can simply recreate the cert with the __openssl__ command. 
 
->Always backup important files first
-
-    sudo cp /etc/kubernetes/pki/apiserver.crt /etc/kubernetes/pki/apiserver.crt.backup
+>Always backup important files first.<br><br>
+sudo cp /etc/kubernetes/pki/apiserver.crt /etc/kubernetes/pki/apiserver.crt.backup
 
 ### Generate new cert with all required SANs
 <br>
