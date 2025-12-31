@@ -113,13 +113,13 @@
     var: sysctl_result.stdout_lines
   when: sysctl_result.stdout_lines | length > 0
 
-- name: Check if containerd is installed
+- name: Check if containerd is already installed
   shell: command -v containerd
   register: containerd_check
   ignore_errors: yes
   changed_when: false
 
-- name: Run setup-container.sh script
+- name: Run setup-container.sh script (only if containerd is NOT already installed)
   shell:
     cmd: "/home/emwg/repos/cka/setup-container.sh"
     chdir: "/home/emwg/repos/cka/"
@@ -144,7 +144,7 @@
     state: absent
   when: kubelet_check.rc != 0
 
-- name: Run setup-kubetools.sh script is kubelet is not installed
+- name: Run setup-kubetools.sh script if kubelet is not installed
   become: true
   shell:
     cmd: "/home/emwg/repos/cka/setup-kubetools.sh"
