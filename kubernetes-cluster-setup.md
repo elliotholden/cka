@@ -142,7 +142,7 @@ These instructions are for Kubernetes v1.34. taken from [Kubernetes.io](https://
 1. Run __kubeadm init__ ONLY on the __control__ node<br/>
    >If you run __kubeadm init__ on any other nodes then you will end up with *multiple* clusters instead of just *one*.
 
-        sudo kubeadm init --pod-network-cidr 192.168.0.0/16
+        sudo kubeadm init --pod-network-cidr 192.168.0.0/16 --apiserver-cert-extra-sans control-1.elliotmywebguy.com c1.elliotmywebguy.com control.elliotmywebguy.com
 
 2. To start using your cluster, you need to run the following as a regular user:
 
