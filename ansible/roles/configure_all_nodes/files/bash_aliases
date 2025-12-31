@@ -9,3 +9,7 @@ LS_COLORS=$LS_COLORS:'di=1;36:ln=1;31'; export LS_COLORS;
 alias rm='rm -i'
 alias repo='cd $HOME/repos'
 alias repos='cd $HOME/repos'
+
+alias k=kubectl
+source <(kubectl completion bash)
+complete -o default -F __start_kubectl k
