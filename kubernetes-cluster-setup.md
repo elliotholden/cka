@@ -142,6 +142,8 @@ These instructions are for Kubernetes v1.34. taken from [Kubernetes.io](https://
 1. Run __kubeadm init__ ONLY on the __control__ node<br/>
    >If you run __kubeadm init__ on any other nodes then you will end up with *multiple* clusters instead of just *one*.
 
+        sudo kubeadm init --pod-network-cidr 192.168.0.0/16
+
 2. To start using your cluster, you need to run the following as a regular user:
 
         mkdir -p $HOME/.kube
@@ -169,9 +171,8 @@ __NOTE:__ If you need to regenerate tokens for joining worker nodes to the clust
 
         kubeadm token create --print-join-command
 
-1. Change the IP address to the IP address of *your* API server. The __--token__ and __--discovery-token-ca-cert-hash__ should be relative to your cluster as well. The folloiwng is just an example and should not be used literally.
+1. The following *join* command needs to be done on the __worker__ nodes. Change the IP address to the IP address of *your* API server. The __--token__ and __--discovery-token-ca-cert-hash__ should be relative to your cluster as well. The folloiwng is just an example and should not be used literally.
 
         kubeadm join 10.142.0.2:6443 --token m01jry.1bz7ntr2bgof59gm --discovery-token-ca-cert-hash sha256:1ae716d8075436f064b9f7f336bbdb8660557812cbb1e00b33dcc9c9036e70cf
-        kubeadm token create --print-join-command
 
 2. If you want to use __kubectl__ on the worker nodes, then you will need to create  a __.kube__ directory in your ~ home directory on the worker node and copy the /etc/kubernetes/__admin.conf__ file from the __control__ node to __~/.kube/config__ on the worker node.
