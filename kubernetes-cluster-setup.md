@@ -171,7 +171,7 @@ __NOTE:__ If you need to regenerate tokens for joining worker nodes to the clust
 
         kubeadm token create --print-join-command
 
-1. The following *join* command needs to be done on the __worker__ nodes. Change the IP address to the IP address of *your* API server. The __--token__ and __--discovery-token-ca-cert-hash__ should be relative to your cluster as well. The folloiwng is just an example and should not be used literally.
+1. The following *join* command needs to be done on the __worker__ nodes. Change the IP address to the IP address of *your* API server. The __--token__ and __--discovery-token-ca-cert-hash__ should be relative to your cluster as well. The following is just an example and should not be used literally.
 
         kubeadm join 10.142.0.2:6443 --token m01jry.1bz7ntr2bgof59gm --discovery-token-ca-cert-hash sha256:1ae716d8075436f064b9f7f336bbdb8660557812cbb1e00b33dcc9c9036e70cf
 
