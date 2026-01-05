@@ -26,7 +26,7 @@ In the is lab we will learn how to create client credentials to authenticate wit
 
 3. Finally we sign the csr and generate the certificate. This step will need access to the private key and certificate of the Kubernetes Certificate Authority (CA). These files will typically reside on the Kubernetes control node in the following the directory: __/etc/kubernetes/pki__. The following command will create a cert that is valid for 30 day.
 
-        sudo opensll x509 -req -in tobin.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out tobin.crt -days 30
+        sudo openssl x509 -req -in tobin.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out tobin.crt -days 30
 <br>
 
 >__IMPORTANT NOTES:__ The __private key__ and __csr__ could and "probably" should be created by the end user who is going to use the __cert__ and __private key__ in _their_ .kube/config file. They would then submit the __csr__ to the Kubernetes admin for signing and cert generation. The Kubernetes admin whould then deliver the __cert__ to the end user. Best practice would suggest that the end user NOT share their __private key__ with anyone. The end user would then add their __private key__ and __cert__ (that they received from the Kubernetes admin) to their ~/.kube/config file.
