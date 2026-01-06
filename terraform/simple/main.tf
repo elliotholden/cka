@@ -32,7 +32,7 @@ resource "google_compute_instance" "c1" {
 
   metadata = {
     enable-osconfig = "TRUE"
-    ssh-keys        = "elliot:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOuvHz4ovrcF3Uj2B9X7Jwgt9VV1wDR6KNRR433zJGx4\nemwg:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOuvHz4ovrcF3Uj2B9X7Jwgt9VV1wDR6KNRR433zJGx4"
+    ssh-keys        = var.ssh_keys
   }
 
   network_interface {
@@ -60,7 +60,7 @@ resource "google_compute_instance" "w1" {
 
   metadata = {
     enable-osconfig = "TRUE"
-    ssh-keys        = "elliot:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOuvHz4ovrcF3Uj2B9X7Jwgt9VV1wDR6KNRR433zJGx4\nemwg:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOuvHz4ovrcF3Uj2B9X7Jwgt9VV1wDR6KNRR433zJGx4"
+    ssh-keys        = var.ssh_keys
   }
 
   network_interface {
@@ -89,7 +89,7 @@ resource "google_compute_instance" "w2" {
 
   metadata = {
     enable-osconfig = "TRUE"
-    ssh-keys        = "elliot:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOuvHz4ovrcF3Uj2B9X7Jwgt9VV1wDR6KNRR433zJGx4\nemwg:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOuvHz4ovrcF3Uj2B9X7Jwgt9VV1wDR6KNRR433zJGx4"
+    ssh-keys        = var.ssh_keys
   }
 
   network_interface {
