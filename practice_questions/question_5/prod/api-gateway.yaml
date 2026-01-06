@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: horizontal-scaling-config
+  namespace: NAMESPACE_REPLACE
+data:
+  horizontal-scaling: "60"
