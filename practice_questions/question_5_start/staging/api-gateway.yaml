@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: horizontal-scaling-config
+  namespace: NAMESPACE_REPLACE
+data:
+  horizontal-scaling: "60"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  labels:
+    env: staging
+  namespace: NAMESPACE_REPLACE
