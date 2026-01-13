@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: api-contact
+  name: api-contact
+spec:
+  serviceAccountName: secret-reader
+  containers:
+  - image: nginx:1-alpine
+    name: api-contact
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
