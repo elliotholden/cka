@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: ds-important
+    id: ds-important
+    uuid: 18426a0b-5f59-4e10-923f-c0e078e82462
+  name: ds-important
+  namespace: project-tiger
+spec:
+  selector:
+    matchLabels:
+      app: ds-important
+  template:
+    metadata:
+      labels:
+        app: ds-important
+    spec:
+      containers:
+        - image: httpd:2-alpine
+          name: httpd
+          resources:
+            requests:
+              memory: "10Mi"
+              cpu: "10m"
+            limits:
+              memory: "15Mi"
+              cpu: "15m"

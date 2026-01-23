@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: deploy-important
+    id: ver-important
+  name: deploy-important
+  namespace: project-tiger
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: deploy-important
+      id: very-important
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: deploy-important
+        id: very-important
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              id: very-important
+      containers:
+        - image: nginx:1-alpine
+          name: nginx
+          resources: {}
+        - image: registry.k8s.io/pause
+          name: pause
+          resources: {}
